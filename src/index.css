@@ -21,7 +21,7 @@ h3 {
   font-size: 25px;
 }
 
-input {
+input, textarea {
   display: block;
   width: 100%;
   padding: 10px 15px;

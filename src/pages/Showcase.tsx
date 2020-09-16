@@ -130,9 +130,9 @@ function Showcase() {
           }} />
 
           <label>Education Description:</label>
-          <input className="education-modal-description" type="text" placeholder="Description" value={newEducationDescription} onChange={(e) => {
+          <textarea rows={5} placeholder="Description" value={newEducationDescription} onChange={(e) => {
             setNewEducationDescription(e.target.value);
-          }} required />
+          }} required></textarea>
 
           <input type="submit" value="Save" />
         </form>
