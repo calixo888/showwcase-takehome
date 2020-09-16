@@ -14,12 +14,12 @@ function Home() {
   const [error, setError] = useState("");
 
   // FUNCTION TO RUN ONCE NAME IS INPUTTED
-  const goToDashboard = () => {
+  const goToShowcase = () => {
     // VALIDATE THAT NAME WAS INPUTTED
     if (name) {
-      // MODIFY REDUX STATE + REDIRECT TO DASHBOARD
+      // MODIFY REDUX STATE + REDIRECT TO SHOWCASE
       dispatch(addName(name));
-      history.push("/dashboard");
+      history.push("/showcase");
     } else {
       setError("Error: You must input a name."); // DISPLAY ERROR TO USER
     }
@@ -33,7 +33,7 @@ function Home() {
       <input style={{ marginBottom: "10px" }} type="text" placeholder="Your name" onChange={e => {
         setName(e.target.value);
       }} />
-      <button type="button" onClick={goToDashboard}>Enter!</button>
+      <button type="button" onClick={goToShowcase}>Enter!</button>
       <small className="error" style={{ marginTop: "10px" }}>{error}</small>
     </div>
   )

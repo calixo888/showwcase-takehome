@@ -6,7 +6,7 @@ import {
   getEducation,
 } from '../reducers/User.js';
 import Modal from 'react-modal';
-import './Dashboard.css';
+import './Showcase.css';
 
 const customStyles = {
   content : {
@@ -15,11 +15,12 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    width: '500px'
   }
 };
 
-function Dashboard() {
+function Showcase() {
   const name = useSelector(getName);
   const education = useSelector(getEducation);
   const dispatch = useDispatch();
@@ -78,33 +79,31 @@ function Dashboard() {
     }
   }, [education]);
 
-  useEffect(() => {
-    console.log(newEducationStartDate);
-    console.log(typeof newEducationStartDate);
-  }, [newEducationStartDate]);
-
   return (
-    <>
-      <div className="dashboard-header">
-        <h1>{name}'s Dashboard</h1>
-        <button type="button" onClick={showEducationModal}>Add Education</button>
+    <div className="showcase">
+      <div className="showcase-header">
+        <h1>Welcome to {name}'s education showcase</h1>
+        <button style={{ marginTop: "15px" }} type="button" onClick={showEducationModal}>Add Education</button>
       </div>
 
-      <div className="dashboard-grid">
-        <div className="dashboard-sidebar">
+      <div className="showcase-grid">
+        <div className="showcase-sidebar">
           <h3>Education</h3>
-          <ul>
+          <ul className="education-list">
             {education.map((educationObj, i) => (
-              <li onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
+              <li className={currentEducationIndex == i ? "selected" : ""} onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
             ))}
           </ul>
         </div>
 
-        <div className="dashboard-body">
+        <div className="showcase-body">
           {education[currentEducationIndex] ?
             <div>
-              <h3>{education[currentEducationIndex].institute}</h3>
-              <h5>{getReadableDate(education[currentEducationIndex].startDate)} - {education[currentEducationIndex].endDate ? getReadableDate(education[currentEducationIndex].endDate) : "Present"}</h5>
+              <h2>{education[currentEducationIndex].institute}</h2>
+              <div style={{
+                marginTop: "15px",
+                marginBottom: "10px"
+              }}>{getReadableDate(education[currentEducationIndex].startDate)} - {education[currentEducationIndex].endDate ? getReadableDate(education[currentEducationIndex].endDate) : "Present"}</div>
               <p>{education[currentEducationIndex].description}</p>
             </div> : "No education exists yet!"
           }
@@ -114,28 +113,32 @@ function Dashboard() {
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
 
-        <form onSubmit={addCurrentEducation}>
+        <form className="education-modal" onSubmit={addCurrentEducation}>
+          <label>Educational Institute:</label>
           <input type="text" placeholder="Institute" value={newEducationInstitute} onChange={(e) => {
             setNewEducationInstitute(e.target.value);
           }} required />
 
-          <input type="date" placeholder="Start Date" value={newEducationStartDate} onChange={(e) => {
+          <label>Start Date:</label>
+          <input type="date" value={newEducationStartDate} onChange={(e) => {
             setNewEducationStartDate(e.target.value);
           }} required />
 
-          <input type="date" placeholder="End Date" value={newEducationEndDate} onChange={(e) => {
+          <label>End Date:</label>
+          <input type="date" value={newEducationEndDate} onChange={(e) => {
             setNewEducationEndDate(e.target.value);
           }} />
 
-          <input type="text" placeholder="Description" value={newEducationDescription} onChange={(e) => {
+          <label>Education Description:</label>
+          <input className="education-modal-description" type="text" placeholder="Description" value={newEducationDescription} onChange={(e) => {
             setNewEducationDescription(e.target.value);
           }} required />
 
           <input type="submit" value="Save" />
         </form>
       </Modal>
-    </>
+    </div>
   )
 }
 
-export default Dashboard;
+export default Showcase;

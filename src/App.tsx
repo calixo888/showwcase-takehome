@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+import Showcase from './pages/Showcase';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,8 +16,8 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/showcase">
+            <Showcase />
           </Route>
         </Switch>
       </Router>

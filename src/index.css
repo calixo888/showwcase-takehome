@@ -3,7 +3,22 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+}
+
+p {
   font-size: 17.5px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 25px;
 }
 
 input {
@@ -12,15 +27,17 @@ input {
   padding: 10px 15px;
   border: 1px solid grey;
   border-radius: 4px;
+  font-size: 17.5px;
 }
 
-button {
+button, input[type=submit] {
   background-color: grey;
   color: white;
   padding: 10px 15px;
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 19px;
 }
 
 .ReactModal__Overlay {

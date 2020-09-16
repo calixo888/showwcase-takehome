@@ -1,0 +1,63 @@
+.showcase {
+  padding: 50px;
+}
+
+.showcase-header {
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,.15);
+  border-radius: 5px;
+  padding: 30px;
+  text-align: center;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  grid-gap: 30px;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.showcase-grid > div {
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,.15);
+  border-radius: 5px;
+  padding: 30px;
+}
+
+.education-list {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.education-list li {
+  padding: 10px 15px;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all .2s;
+  font-size: 17.5px;
+}
+
+.education-list li:hover {
+  background-color: #eee;
+}
+
+.education-list li.selected {
+  color: white;
+  font-weight: bold;
+  background-color: grey;
+}
+
+.education-modal {
+  margin-top: 30px;
+}
+
+.education-modal input {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.education-modal-description {
+  height: 200px;
+}
