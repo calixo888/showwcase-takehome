@@ -6,6 +6,7 @@ import {
   getEducation,
 } from '../reducers/User.js';
 import Modal from 'react-modal';
+import './Dashboard.css';
 
 const customStyles = {
   content : {
@@ -58,6 +59,10 @@ function Dashboard() {
     setEducationModalShow(false); // CLOSE MODAL
   }
 
+  const getReadableDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US");
+  }
+
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
   useEffect(() => {
     if (!name) {
@@ -73,25 +78,38 @@ function Dashboard() {
     }
   }, [education]);
 
+  useEffect(() => {
+    console.log(newEducationStartDate);
+    console.log(typeof newEducationStartDate);
+  }, [newEducationStartDate]);
+
   return (
-    <div className="center-container">
-      <h1>{name}'s Dashboard</h1>
+    <>
+      <div className="dashboard-header">
+        <h1>{name}'s Dashboard</h1>
+        <button type="button" onClick={showEducationModal}>Add Education</button>
+      </div>
 
-      <button type="button" onClick={showEducationModal}>Add Education</button>
+      <div className="dashboard-grid">
+        <div className="dashboard-sidebar">
+          <h3>Education</h3>
+          <ul>
+            {education.map((educationObj, i) => (
+              <li onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
+            ))}
+          </ul>
+        </div>
 
-      <h3>Education</h3>
-      <ul>
-        {education.map((educationObj, i) => (
-          <li onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
-        ))}
-      </ul>
-
-      <h3>Current Education</h3>
-      {education[currentEducationIndex] ?
-        <div>
-          <h5>{education[currentEducationIndex].institute}</h5>
-        </div> : "No education exists yet!"
-      }
+        <div className="dashboard-body">
+          {education[currentEducationIndex] ?
+            <div>
+              <h3>{education[currentEducationIndex].institute}</h3>
+              <h5>{getReadableDate(education[currentEducationIndex].startDate)} - {education[currentEducationIndex].endDate ? getReadableDate(education[currentEducationIndex].endDate) : "Present"}</h5>
+              <p>{education[currentEducationIndex].description}</p>
+            </div> : "No education exists yet!"
+          }
+        </div>
+      </div>
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
@@ -116,7 +134,7 @@ function Dashboard() {
           <input type="submit" value="Save" />
         </form>
       </Modal>
-    </div>
+    </>
   )
 }
 
