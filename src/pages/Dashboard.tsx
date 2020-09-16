@@ -24,6 +24,8 @@ function Dashboard() {
   const dispatch = useDispatch();
   const [educationModalShow, setEducationModalShow] = useState(false);
 
+  const [currentEducationIndex, setCurrentEducationIndex] = useState();
+
   const [newEducationInstitute, setNewEducationInstitute] = useState("");
   const [newEducationStartDate, setNewEducationStartDate] = useState();
   const [newEducationEndDate, setNewEducationEndDate] = useState();
@@ -63,6 +65,14 @@ function Dashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    if (education.length > 0) {
+      if (!currentEducationIndex) {
+        setCurrentEducationIndex(0);
+      }
+    }
+  }, [education]);
+
   return (
     <div className="center-container">
       <h1>{name}'s Dashboard</h1>
@@ -72,9 +82,16 @@ function Dashboard() {
       <h3>Education</h3>
       <ul>
         {education.map((educationObj, i) => (
-          <li>{educationObj.institute}</li>
+          <li onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
         ))}
       </ul>
+
+      <h3>Current Education</h3>
+      {education[currentEducationIndex] ?
+        <div>
+          <h5>{education[currentEducationIndex].institute}</h5>
+        </div> : "No education exists yet!"
+      }
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
