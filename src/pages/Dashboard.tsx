@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  addName,
+  addEducation,
   getName,
+  getEducation,
 } from '../reducers/User.js';
 import Modal from 'react-modal';
 
@@ -19,8 +20,11 @@ const customStyles = {
 
 function Dashboard() {
   const name = useSelector(getName);
+  const education = useSelector(getEducation);
   const dispatch = useDispatch();
   const [educationModalShow, setEducationModalShow] = useState(false);
+
+  const [currentEducationTitle, setCurrentEducationTitle] = useState("");
 
   const showEducationModal = () => {
     setEducationModalShow(true);
@@ -28,6 +32,18 @@ function Dashboard() {
 
   const hideEducationModal = () => {
     setEducationModalShow(false);
+  }
+
+  const handleCurrentEducationTitle = (event) => {
+    setCurrentEducationTitle(event.target.value);
+  }
+
+  const addCurrentEducation = () => {
+    dispatch(addEducation({
+      title: currentEducationTitle
+    }));
+    setCurrentEducationTitle(""); // RESETTING CURRENT EDUCATION INPUT
+    setEducationModalShow(false); // CLOSE MODAL 
   }
 
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
@@ -45,6 +61,8 @@ function Dashboard() {
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
+        <input type="text" placeholder="Education Title" value={currentEducationTitle} onChange={handleCurrentEducationTitle} />
+        <button type="button" onClick={addCurrentEducation}>Save</button>
       </Modal>
     </div>
   )
