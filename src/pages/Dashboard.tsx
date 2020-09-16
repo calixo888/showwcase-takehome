@@ -43,7 +43,7 @@ function Dashboard() {
       title: currentEducationTitle
     }));
     setCurrentEducationTitle(""); // RESETTING CURRENT EDUCATION INPUT
-    setEducationModalShow(false); // CLOSE MODAL 
+    setEducationModalShow(false); // CLOSE MODAL
   }
 
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
@@ -58,6 +58,13 @@ function Dashboard() {
       <h1>{name}'s Dashboard</h1>
 
       <button type="button" onClick={showEducationModal}>Add Education</button>
+
+      <h3>Education</h3>
+      <ul>
+        {education.map((educationObj, i) => (
+          <li>{educationObj.title}</li>
+        ))}
+      </ul>
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
