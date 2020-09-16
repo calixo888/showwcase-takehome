@@ -5,6 +5,7 @@ import {
   getName,
 } from '../reducers/User.js';
 import { useHistory } from 'react-router-dom';
+import './Home.css';
 
 function Home() {
   const history = useHistory();
@@ -26,12 +27,14 @@ function Home() {
 
   return (
     <div className="center-container">
-      <h1>Hello world!</h1>
-      <input type="text" placeholder="Enter your name" onChange={e => {
+      <p style={{ marginBottom: "25px" }}>Hi there! Welcome to your education showcase.</p>
+
+      <p style={{ marginBottom: "15px" }}>Type your name and click "Enter" below to begin!</p>
+      <input style={{ marginBottom: "10px" }} type="text" placeholder="Your name" onChange={e => {
         setName(e.target.value);
       }} />
       <button type="button" onClick={goToDashboard}>Enter!</button>
-      <small>{error}</small>
+      <small className="error" style={{ marginTop: "10px" }}>{error}</small>
     </div>
   )
 }
