@@ -24,7 +24,10 @@ function Dashboard() {
   const dispatch = useDispatch();
   const [educationModalShow, setEducationModalShow] = useState(false);
 
-  const [currentEducationTitle, setCurrentEducationTitle] = useState("");
+  const [newEducationInstitute, setNewEducationInstitute] = useState("");
+  const [newEducationStartDate, setNewEducationStartDate] = useState();
+  const [newEducationEndDate, setNewEducationEndDate] = useState();
+  const [newEducationDescription, setNewEducationDescription] = useState("");
 
   const showEducationModal = () => {
     setEducationModalShow(true);
@@ -34,15 +37,22 @@ function Dashboard() {
     setEducationModalShow(false);
   }
 
-  const handleCurrentEducationTitle = (event) => {
-    setCurrentEducationTitle(event.target.value);
-  }
+  const addCurrentEducation = (e) => {
+    e.preventDefault();
 
-  const addCurrentEducation = () => {
     dispatch(addEducation({
-      title: currentEducationTitle
+      institute: newEducationInstitute,
+      startDate: newEducationStartDate,
+      endDate: newEducationEndDate,
+      description: newEducationDescription
     }));
-    setCurrentEducationTitle(""); // RESETTING CURRENT EDUCATION INPUT
+
+    // RESETTING CURRENT EDUCATION INPUTS
+    setNewEducationInstitute("");
+    setNewEducationStartDate(undefined);
+    setNewEducationEndDate(undefined);
+    setNewEducationDescription("");
+
     setEducationModalShow(false); // CLOSE MODAL
   }
 
@@ -62,14 +72,32 @@ function Dashboard() {
       <h3>Education</h3>
       <ul>
         {education.map((educationObj, i) => (
-          <li>{educationObj.title}</li>
+          <li>{educationObj.institute}</li>
         ))}
       </ul>
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
         <h3>Add Education</h3>
-        <input type="text" placeholder="Education Title" value={currentEducationTitle} onChange={handleCurrentEducationTitle} />
-        <button type="button" onClick={addCurrentEducation}>Save</button>
+
+        <form onSubmit={addCurrentEducation}>
+          <input type="text" placeholder="Institute" value={newEducationInstitute} onChange={(e) => {
+            setNewEducationInstitute(e.target.value);
+          }} required />
+
+          <input type="date" placeholder="Start Date" value={newEducationStartDate} onChange={(e) => {
+            setNewEducationStartDate(e.target.value);
+          }} required />
+
+          <input type="date" placeholder="End Date" value={newEducationEndDate} onChange={(e) => {
+            setNewEducationEndDate(e.target.value);
+          }} />
+
+          <input type="text" placeholder="Description" value={newEducationDescription} onChange={(e) => {
+            setNewEducationDescription(e.target.value);
+          }} required />
+
+          <input type="submit" value="Save" />
+        </form>
       </Modal>
     </div>
   )
