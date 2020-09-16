@@ -111,7 +111,7 @@ function Showcase() {
       </div>
 
       <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
-        <h3>Add Education</h3>
+        <h2>Add Education</h2>
 
         <form className="education-modal" onSubmit={addCurrentEducation}>
           <label>Educational Institute:</label>

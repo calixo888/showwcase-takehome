@@ -11,7 +11,9 @@ export const slice = createSlice({
       state.name = action.payload;
     },
     addEducation: (state, action) => {
-      state.education = [...state.education, action.payload];
+      let newEducation = [...state.education, action.payload];
+      newEducation = newEducation.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+      state.education = newEducation;
     }
   },
 });
