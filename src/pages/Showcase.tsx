@@ -6,6 +6,7 @@ import {
   getEducation,
 } from '../reducers/User.js';
 import EducationModal from '../components/EducationModal.js';
+import ShowcaseSidebar from '../components/ShowcaseSidebar.js';
 import ShowcaseBody from '../components/ShowcaseBody.js';
 import './Showcase.css';
 
@@ -39,24 +40,14 @@ function Showcase() {
       </div>
 
       <div className="showcase-grid">
-        <div className="showcase-sidebar">
-          <h3>Education</h3>
-          <ul className="education-list">
-            {education.map((educationObj, i) => (
-              <li className={currentEducationIndex == i ? "selected" : ""} onClick={() => setCurrentEducationIndex(i)}>{educationObj.institute}</li>
-            ))}
-          </ul>
-        </div>
+        <ShowcaseSidebar education={education} currentEducationIndex={currentEducationIndex} changeCurrentEducationIndex={(index) => setCurrentEducationIndex(index)} />
 
         <ShowcaseBody currentEducation={education[currentEducationIndex]} />
       </div>
 
       {educationModalShow ?
-        <EducationModal isShow={educationModalShow} closeModal={() => {
-          setEducationModalShow(false);
-        }} />
-        :
-        <></>
+        <EducationModal isShow={educationModalShow} closeModal={() => setEducationModalShow(false)} />
+        : ""
       }
     </div>
   )

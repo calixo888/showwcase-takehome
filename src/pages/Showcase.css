@@ -24,27 +24,3 @@
   border-radius: 5px;
   padding: 30px;
 }
-
-.education-list {
-  list-style: none;
-  margin-top: 15px;
-}
-
-.education-list li {
-  padding: 10px 15px;
-  color: black;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all .2s;
-  font-size: 17.5px;
-}
-
-.education-list li:hover {
-  background-color: #eee;
-}
-
-.education-list li.selected {
-  color: white;
-  font-weight: bold;
-  background-color: grey;
-}
