@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import {
   addEducation,
   getName,
@@ -33,6 +34,9 @@ function Showcase() {
   const [newEducationEndDate, setNewEducationEndDate] = useState();
   const [newEducationDescription, setNewEducationDescription] = useState("");
 
+  const [showInstituteList, setShowInstituteList] = useState(false);
+  const [instituteList, setInstituteList] = useState([]);
+
   const showEducationModal = () => {
     setEducationModalShow(true);
   }
@@ -64,6 +68,13 @@ function Showcase() {
     return new Date(date).toLocaleDateString("en-US");
   }
 
+  const loadNewUniversities = () => {
+    // LIMIT TO US TO MAKE REQUEST FASTER
+    axios.get(`http://universities.hipolabs.com/search?name=${newEducationInstitute}&country=United%20States`).then(response => {
+      setInstituteList(response.data);
+    });
+  }
+
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
   useEffect(() => {
     if (!name) {
@@ -78,6 +89,8 @@ function Showcase() {
       }
     }
   }, [education]);
+
+  useEffect(loadNewUniversities, [newEducationInstitute])
 
   return (
     <div className="showcase">
@@ -115,9 +128,25 @@ function Showcase() {
 
         <form className="education-modal" onSubmit={addCurrentEducation}>
           <label>Educational Institute:</label>
-          <input type="text" placeholder="Institute" value={newEducationInstitute} onChange={(e) => {
-            setNewEducationInstitute(e.target.value);
-          }} required />
+          <div className="institute-container">
+            <input type="text" placeholder="Institute" value={newEducationInstitute} onChange={(e) => {
+              setNewEducationInstitute(e.target.value);
+            }} onFocus={() => setShowInstituteList(true)} required />
+            <div className="institute-list">
+              {showInstituteList ?
+                instituteList.length > 0 ?
+                  instituteList.map((institute, i) => (
+                    <span className="institute" onClick={() => {
+                      setNewEducationInstitute(institute.name);
+                      setShowInstituteList(false);
+                    }}>{institute.name}</span>
+                  ))
+                  :
+                  <span className="institute">No institutes found!</span>
+                : ""
+              }
+            </div>
+          </div>
 
           <label>Start Date:</label>
           <input type="date" value={newEducationStartDate} onChange={(e) => {
