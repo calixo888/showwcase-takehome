@@ -14,7 +14,6 @@ function Showcase() {
   const name = useSelector(getName);
   const education = useSelector(getEducation);
   const [educationModalShow, setEducationModalShow] = useState(false);
-
   const [currentEducationIndex, setCurrentEducationIndex] = useState();
 
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
