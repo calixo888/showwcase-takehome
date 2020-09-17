@@ -7,6 +7,7 @@ import {
   getName,
   getEducation,
 } from '../reducers/User.js';
+import './EducationModal.css';
 
 const customStyles = {
   content : {

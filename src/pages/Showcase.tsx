@@ -6,6 +6,7 @@ import {
   getEducation,
 } from '../reducers/User.js';
 import EducationModal from '../components/EducationModal.js';
+import ShowcaseBody from '../components/ShowcaseBody.js';
 import './Showcase.css';
 
 function Showcase() {
@@ -14,10 +15,6 @@ function Showcase() {
   const [educationModalShow, setEducationModalShow] = useState(false);
 
   const [currentEducationIndex, setCurrentEducationIndex] = useState();
-
-  const getReadableDate = (date) => {
-    return new Date(date).toLocaleDateString("en-US");
-  }
 
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
   useEffect(() => {
@@ -51,18 +48,7 @@ function Showcase() {
           </ul>
         </div>
 
-        <div className="showcase-body">
-          {education[currentEducationIndex] ?
-            <div>
-              <h2>{education[currentEducationIndex].institute}</h2>
-              <div style={{
-                marginTop: "15px",
-                marginBottom: "10px"
-              }}>{getReadableDate(education[currentEducationIndex].startDate)} - {education[currentEducationIndex].endDate ? getReadableDate(education[currentEducationIndex].endDate) : "Present"}</div>
-              <p>{education[currentEducationIndex].description}</p>
-            </div> : "No education exists yet!"
-          }
-        </div>
+        <ShowcaseBody currentEducation={education[currentEducationIndex]} />
       </div>
 
       {educationModalShow ?

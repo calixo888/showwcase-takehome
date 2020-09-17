@@ -1,0 +1,40 @@
+.institute-container {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.institute-container input {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.institute-list {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,.15);
+}
+
+.institute-list .institute {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.institute-list .institute:hover {
+  background-color: #eee;
+}
+
+.education-modal {
+  margin-top: 30px;
+}
+
+.education-modal input, textarea {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.education-modal-description {
+  height: 200px;
+}
