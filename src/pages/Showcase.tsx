@@ -1,78 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import {
   addEducation,
   getName,
   getEducation,
 } from '../reducers/User.js';
-import Modal from 'react-modal';
+import EducationModal from '../components/EducationModal.js';
 import './Showcase.css';
-
-const customStyles = {
-  content : {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '500px'
-  }
-};
 
 function Showcase() {
   const name = useSelector(getName);
   const education = useSelector(getEducation);
-  const dispatch = useDispatch();
   const [educationModalShow, setEducationModalShow] = useState(false);
 
   const [currentEducationIndex, setCurrentEducationIndex] = useState();
 
-  const [newEducationInstitute, setNewEducationInstitute] = useState("");
-  const [newEducationStartDate, setNewEducationStartDate] = useState();
-  const [newEducationEndDate, setNewEducationEndDate] = useState();
-  const [newEducationDescription, setNewEducationDescription] = useState("");
-
-  const [showInstituteList, setShowInstituteList] = useState(false);
-  const [instituteList, setInstituteList] = useState([]);
-
-  const showEducationModal = () => {
-    setEducationModalShow(true);
-  }
-
-  const hideEducationModal = () => {
-    setEducationModalShow(false);
-  }
-
-  const addCurrentEducation = (e) => {
-    e.preventDefault();
-
-    dispatch(addEducation({
-      institute: newEducationInstitute,
-      startDate: newEducationStartDate,
-      endDate: newEducationEndDate,
-      description: newEducationDescription
-    }));
-
-    // RESETTING CURRENT EDUCATION INPUTS
-    setNewEducationInstitute("");
-    setNewEducationStartDate(undefined);
-    setNewEducationEndDate(undefined);
-    setNewEducationDescription("");
-
-    setEducationModalShow(false); // CLOSE MODAL
-  }
-
   const getReadableDate = (date) => {
     return new Date(date).toLocaleDateString("en-US");
-  }
-
-  const loadNewUniversities = () => {
-    // LIMIT TO US TO MAKE REQUEST FASTER
-    axios.get(`http://universities.hipolabs.com/search?name=${newEducationInstitute}&country=United%20States`).then(response => {
-      setInstituteList(response.data);
-    });
   }
 
   // REDIRECT TO HOME IF NAME DOES NOT EXIST
@@ -90,13 +34,11 @@ function Showcase() {
     }
   }, [education]);
 
-  useEffect(loadNewUniversities, [newEducationInstitute])
-
   return (
     <div className="showcase">
       <div className="showcase-header">
         <h1>Welcome to {name}'s education showcase</h1>
-        <button style={{ marginTop: "15px" }} type="button" onClick={showEducationModal}>Add Education</button>
+        <button style={{ marginTop: "15px" }} type="button" onClick={() => setEducationModalShow(true)}>Add Education</button>
       </div>
 
       <div className="showcase-grid">
@@ -123,49 +65,13 @@ function Showcase() {
         </div>
       </div>
 
-      <Modal isOpen={educationModalShow} onRequestClose={hideEducationModal} style={customStyles}>
-        <h2>Add Education</h2>
-
-        <form className="education-modal" onSubmit={addCurrentEducation}>
-          <label>Educational Institute:</label>
-          <div className="institute-container">
-            <input type="text" placeholder="Institute" value={newEducationInstitute} onChange={(e) => {
-              setNewEducationInstitute(e.target.value);
-            }} onFocus={() => setShowInstituteList(true)} required />
-            <div className="institute-list">
-              {showInstituteList ?
-                instituteList.length > 0 ?
-                  instituteList.map((institute, i) => (
-                    <span className="institute" onClick={() => {
-                      setNewEducationInstitute(institute.name);
-                      setShowInstituteList(false);
-                    }}>{institute.name}</span>
-                  ))
-                  :
-                  <span className="institute">No institutes found!</span>
-                : ""
-              }
-            </div>
-          </div>
-
-          <label>Start Date:</label>
-          <input type="date" value={newEducationStartDate} onChange={(e) => {
-            setNewEducationStartDate(e.target.value);
-          }} required />
-
-          <label>End Date:</label>
-          <input type="date" value={newEducationEndDate} onChange={(e) => {
-            setNewEducationEndDate(e.target.value);
-          }} />
-
-          <label>Education Description:</label>
-          <textarea rows={5} placeholder="Description" value={newEducationDescription} onChange={(e) => {
-            setNewEducationDescription(e.target.value);
-          }} required></textarea>
-
-          <input type="submit" value="Save" />
-        </form>
-      </Modal>
+      {educationModalShow ?
+        <EducationModal isShow={educationModalShow} closeModal={() => {
+          setEducationModalShow(false);
+        }} />
+        :
+        <></>
+      }
     </div>
   )
 }
