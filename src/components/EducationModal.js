@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import {
-  addEducation,
-  getName,
-  getEducation,
-} from '../reducers/User.js';
+import { addEducation } from '../reducers/User.js';
 import './EducationModal.css';
 
 const customStyles = {
@@ -22,10 +18,9 @@ const customStyles = {
 };
 
 function EducationModal({ closeModal, isShow }) {
-  const education = useSelector(getEducation);
   const dispatch = useDispatch();
 
-  const [show, setShow] = useState(isShow);
+  const [show] = useState(isShow);
 
   const [newEducationInstitute, setNewEducationInstitute] = useState("");
   const [newEducationStartDate, setNewEducationStartDate] = useState();

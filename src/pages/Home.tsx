@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  addName,
-  getName,
-} from '../reducers/User.js';
+import { useDispatch } from 'react-redux';
+import { addName } from '../reducers/User.js';
 import { useHistory } from 'react-router-dom';
 import './Home.css';
 
